@@ -42,6 +42,16 @@ set local role authenticated;
 select set_config('request.jwt.claim.sub','00000000-0000-4000-a000-000000000003',true);
 do $$begin if exists(select 1 from public.resource_links) or exists(select 1 from public.lessons) then raise exception 'Refund did not revoke content';end if;end $$;
 reset role;
+insert into private.purchases(order_id,email,offer_id,plan_id,status,ministry_id) select 'test-downgrade-a','ra-test-a@example.invalid','test-offer',1,'paid',id from public.ministries where owner_id='00000000-0000-4000-a000-000000000001';
+set local role authenticated;
+select set_config('request.jwt.claim.sub','00000000-0000-4000-a000-000000000003',true);
+do $$begin
+ if private.my_rank()<>0 or exists(select 1 from public.lessons) or exists(select 1 from public.resource_links) then raise exception 'Excess member still has content after downgrade';end if;
+ if (public.ra_action('workspace')->>'suspended')::boolean is not true then raise exception 'Suspension was not reported';end if;
+end $$;
+select set_config('request.jwt.claim.sub','00000000-0000-4000-a000-000000000001',true);
+do $$begin if private.my_rank()<>1 then raise exception 'Owner lost remaining Essential plan';end if;end $$;
+reset role;
 insert into private.offers values('test-offer','test-product',1);
 select public.record_cakto('refund','{"id":"test-reordered","customer":{"email":"ra-test-b@example.invalid"},"offer":{"id":"test-offer"},"product":{"id":"test-product"}}');
 select public.record_cakto('purchase_approved','{"id":"test-reordered","status":"paid","customer":{"email":"ra-test-b@example.invalid"},"offer":{"id":"test-offer"},"product":{"id":"test-product"}}');

@@ -37,7 +37,7 @@ Em Administração é possível editar materiais e planos mínimos, enviar arqui
 4. Em Supabase → Edge Functions → Secrets, configure `CAKTO_WEBHOOK_SECRET` com o mesmo segredo fornecido pela configuração do webhook Cakto. Não cole esse segredo no frontend nem no GitHub.
 5. Na Cakto, cadastre o endpoint abaixo para `purchase_approved`, `refund` e `chargeback`. A autenticação usa o campo `secret` do payload da Cakto. Sem o segredo no servidor, o endpoint responde 503 e não libera acesso.
 6. Faça uma compra real de teste e confira: cadastro com o mesmo e-mail → confirmação → criação do ministério → acesso ao plano → convite → aula → download → reembolso revogando o conteúdo.
-7. Confirme as permissões de visualização das aulas no Drive e a duplicação dos packs em uma conta pessoal Canva. Os arquivos CapCut existentes em formato `.ts` podem exigir conversão para MP4 se o Drive não oferecer preview; o link externo é um recurso de acesso, não uma garantia de reprodução incorporada.
+7. Confirme as permissões de visualização das aulas no Drive e a duplicação dos packs em uma conta pessoal Canva. As primeiras aulas reais de Canva e CapCut, incluindo o arquivo `.ts` do CapCut, foram reproduzidas no preview do Drive. Confira também os demais arquivos antes de vender.
 
 Webhook: `https://iibxznwicmxrsogurith.supabase.co/functions/v1/cakto-webhook`
 
@@ -47,7 +47,7 @@ Configuração de frontend na Vercel: `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLI
 
 O banco aplica RLS por ministério e plano. Documentos privados geram links assinados válidos por 5 minutos. URLs do Drive/Canva são protegidas no catálogo, mas continuam sendo links externos copiáveis depois de entregues; a plataforma não adiciona DRM a esses serviços.
 
-Eventos repetidos são idempotentes. Reembolso e chargeback permanecem finais mesmo quando uma aprovação antiga chega depois. O maior plano de compras válidas define o acesso atual. A redução de plano bloqueia conteúdo e novos convites; integrantes já cadastrados não são removidos automaticamente, para evitar perda silenciosa de vínculos.
+Eventos repetidos são idempotentes. Reembolso e chargeback permanecem finais mesmo quando uma aprovação antiga chega depois. O maior plano de compras válidas define o acesso atual. A redução de plano suspende o acesso ao conteúdo dos integrantes que excedem a capacidade, priorizando o responsável e a ordem de entrada. Cadastros e progresso ficam preservados; ao ampliar o plano, o acesso retorna. Novos convites respeitam a capacidade atual.
 
 Pedidos armazenam somente ID, e-mail, oferta, plano, status e vínculo do ministério. CPF, telefone, cartão e segredo do webhook são descartados. Os esquemas privados não possuem acesso direto para usuários.
 
