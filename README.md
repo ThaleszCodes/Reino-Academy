@@ -8,6 +8,8 @@ Requer Node 24. Copie `.env.example` para `.env`, execute `npm ci` e `npm run de
 
 `npm test` valida normalização e autenticação dos eventos Cakto. `npm run build` verifica TypeScript e compila. `npx playwright install chromium && npm run test:e2e` testa login, onboarding, biblioteca, equipe, player e layouts desktop/mobile com fixtures sintéticas. O workflow GitHub executa esses comandos e guarda capturas. Os testes de autorização real ficam em `supabase/tests/access.sql`; a transação desfaz os registros de teste.
 
+Plataforma: https://reino-academy.vercel.app/
+
 ## Entrega implantada
 
 - Projeto Supabase: `iibxznwicmxrsogurith` (Reino Academy).
@@ -29,7 +31,7 @@ Em Administração é possível editar materiais e planos mínimos, enviar arqui
 
 ## Configuração final antes das vendas
 
-1. Em Supabase → Authentication → URL Configuration, defina **Site URL** como o endereço de produção. Adicione esse endereço e a rota `/recuperar` aos redirect URLs. Para testes locais, adicione `http://localhost:5173` e `http://localhost:5173/recuperar`.
+1. Em Supabase → Authentication → URL Configuration, defina **Site URL** como o endereço de produção. Adicione `https://reino-academy.vercel.app/**` aos redirect URLs (inclui recuperação e links de convite). Para testes locais, adicione `http://localhost:5173` e `http://localhost:5173/recuperar`.
 2. Configure SMTP próprio e teste confirmação e recuperação de senha. O envio padrão do Supabase tem restrições e não deve ser usado como serviço de e-mail de produção.
 3. Em Administração → Cakto, cadastre os três pares reais de **ID da oferta**, **ID do produto** e **URL do checkout**. Oferta e produto são validados juntos pelo servidor; nenhum ID fictício libera acesso.
 4. Em Supabase → Edge Functions → Secrets, configure `CAKTO_WEBHOOK_SECRET` com o mesmo segredo fornecido pela configuração do webhook Cakto. Não cole esse segredo no frontend nem no GitHub.
