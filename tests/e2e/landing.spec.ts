@@ -73,3 +73,24 @@ test('pricing has continuous fold, working offers and accessible premium reflect
   await pricing.scrollIntoViewIfNeeded();
   await page.screenshot({path:info.outputPath('pricing-section.png'),fullPage:true,animations:'disabled'});
 });
+
+test('centered guarantee uses a native seal and connects to plans and support',async({page},info)=>{
+  await page.goto('/');
+  const section=page.getByRole('region',{name:'Conheça por dentro. Você tem 7 dias de garantia.'});
+  await expect(section).toBeVisible();
+  await expect(section.locator('.lp-guarantee-seal')).toHaveCount(1);
+  await expect(section.locator('img')).toHaveCount(0);
+  await expect(section).toContainText('em até 7 dias após a compra');
+  await expect(section.getByRole('link',{name:'Escolher meu plano'})).toHaveAttribute('href','#planos');
+  await expect(section.getByRole('link',{name:/Dúvidas sobre a garantia/})).toHaveAttribute('href','https://wa.me/5553991257648');
+  const layout=await section.evaluate(el=>{
+    const seal=el.querySelector('.lp-guarantee-seal')!.getBoundingClientRect(),box=el.getBoundingClientRect();
+    return {centerOffset:Math.abs((seal.left+seal.width/2)-(box.left+box.width/2)),background:getComputedStyle(el).backgroundColor,shared:el.parentElement===document.querySelector('.lp-pricing')!.parentElement,overflow:document.documentElement.scrollWidth>innerWidth};
+  });
+  expect(layout.centerOffset).toBeLessThan(1);
+  expect(layout.background).toBe('rgba(0, 0, 0, 0)');
+  expect(layout.shared).toBe(true);
+  expect(layout.overflow).toBe(false);
+  await section.scrollIntoViewIfNeeded();
+  await page.screenshot({path:info.outputPath('guarantee-section.png'),animations:'disabled'});
+});

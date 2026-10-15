@@ -91,6 +91,17 @@ export default function Landing() {
       <p className="lp-access-note">Os acessos incluem o responsável pela equipe.</p>
       <div className="lp-pricing-trust"><span><ShieldCheck size={22} aria-hidden="true"/>7 dias de garantia</span><a href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer"><MessageCircle size={20} aria-hidden="true"/>Precisa de ajuda? Fale com o suporte <ArrowRight size={16} aria-hidden="true"/></a></div>
     </section>
+    <section className="lp-guarantee" aria-labelledby="guarantee-title">
+      <p className="lp-eyebrow">SUA ESCOLHA COM TRANQUILIDADE</p>
+      <div className="lp-guarantee-seal" aria-hidden="true">
+        <div className="lp-seal-face"><span className="lp-seal-top">GARANTIA</span><strong>7</strong><span className="lp-seal-days">DIAS</span><span className="lp-seal-bottom">REINO ACADEMY</span></div>
+      </div>
+      <h2 id="guarantee-title">Conheça por dentro.<br/><span>Você tem 7 dias de garantia.</span></h2>
+      <p className="lp-guarantee-intro">Entre na plataforma, explore os conteúdos do seu plano e veja como eles podem ajudar na rotina da sua mídia.</p>
+      <p className="lp-guarantee-terms">Se decidir que não é para você, solicite o reembolso em até 7 dias após a compra. Nosso suporte está disponível para orientar você.</p>
+      <a className="lp-cta" href="#planos">Escolher meu plano <ArrowRight size={20} aria-hidden="true"/></a>
+      <a className="lp-guarantee-support" href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer">Dúvidas sobre a garantia? Fale com o suporte <ArrowRight size={15} aria-hidden="true"/></a>
+    </section>
     <footer className="lp-footer"><span>REINO ACADEMY</span><a href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer">Falar com o suporte <ArrowRight size={15}/></a></footer>
     </div>
   </div>;
