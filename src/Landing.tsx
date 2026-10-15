@@ -37,6 +37,7 @@ export default function Landing() {
         <small>A partir de R$27 <i>·</i> Pagamento único <i>·</i> Garantia de 7 dias</small>
       </main>
     </section>
+    <div className="lp-story">
     <section className="lp-resources" aria-labelledby="resources-title">
       <div className="lp-section-intro"><p className="lp-eyebrow">O QUE VOCÊ ENCONTRA AQUI</p>
         <h2 id="resources-title">Aprenda as ferramentas.<br/>Tenha recursos para <span>colocar em prática.</span></h2>
@@ -48,7 +49,24 @@ export default function Landing() {
       </article>)}</div>
       <div className="lp-disclaimer"><p>Os cursos são técnicos e não têm conteúdo especificamente cristão.</p><small>Os conteúdos disponíveis variam conforme o plano escolhido.</small></div>
     </section>
+    <section className="lp-routine" aria-labelledby="routine-title">
+      <div className="lp-routine-copy">
+        <p className="lp-eyebrow">NA ROTINA DA SUA MÍDIA</p>
+        <h2 id="routine-title">O próximo culto<br/>não precisa<br/><span>começar na<br/>correria.</span></h2>
+        <p className="lp-routine-intro">Aprenda, adapte os materiais e organize os próximos passos de quem serve com você.</p>
+        <button className="lp-cta" onClick={openPlans}>Encontrar meu plano <ArrowRight size={22}/></button>
+      </div>
+      <div className="lp-routine-details">
+        <ol className="lp-routine-list">
+          <li><span className="lp-step-number" aria-hidden="true">01</span><div><h3>Prepare a comunicação</h3><p>Use artes editáveis e legendas como ponto de partida para divulgar o culto.</p></div></li>
+          <li><span className="lp-step-number" aria-hidden="true">02</span><div><h3>Crie com mais segurança</h3><p>Consulte as aulas técnicas de Canva e edição de vídeo para desenvolver suas habilidades.</p></div></li>
+          <li><span className="lp-step-number" aria-hidden="true">03</span><div><h3>Organize quem serve</h3><p>Adapte escalas, checklists e mensagens para a rotina da sua equipe.</p></div></li>
+        </ol>
+        <p className="lp-routine-note">Recursos disponíveis conforme o plano escolhido.</p>
+      </div>
+    </section>
     <footer className="lp-footer"><span>REINO ACADEMY</span><a href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer">Falar com o suporte <ArrowRight size={15}/></a></footer>
+    </div>
     <dialog ref={dialog} className="lp-plans" aria-labelledby="plans-title" onClick={e => { if (e.target === e.currentTarget) dialog.current?.close(); }}>
       <button className="lp-close" aria-label="Fechar planos" onClick={() => dialog.current?.close()}><X size={22}/></button>
       <p className="lp-eyebrow">ESCOLHA SEU PRÓXIMO PASSO</p><h2 id="plans-title">Um investimento. Acesso vitalício.</h2>

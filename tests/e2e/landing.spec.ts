@@ -28,3 +28,32 @@ test('old invitation URLs still enter the platform', async ({page}) => {
   await expect(page).toHaveURL(/\/login\?convite=legacy-test/);
   await expect(page.getByRole('button',{name:'Entrar',exact:true})).toBeVisible();
 });
+
+test('routine section shares continuous atmosphere and opens checkout choices', async ({page},info) => {
+  await page.goto('/');
+  const routine=page.getByRole('region',{name:'O próximo culto não precisa começar na correria.'});
+  await expect(routine).toBeVisible();
+  await expect(routine.getByRole('listitem')).toHaveCount(3);
+  await routine.getByRole('button',{name:'Encontrar meu plano'}).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape');
+  const continuity=await page.evaluate(()=>{
+    const story=document.querySelector('.lp-story')!;
+    const resources=document.querySelector('.lp-resources')!;
+    const section=document.querySelector('.lp-routine')!;
+    return {
+      shared:resources.parentElement===story && section.parentElement===story,
+      resources:getComputedStyle(resources).backgroundColor,
+      section:getComputedStyle(section).backgroundColor,
+      glow:getComputedStyle(section,'::before').backgroundImage,
+      horizontalOverflow:document.documentElement.scrollWidth>innerWidth
+    };
+  });
+  expect(continuity.shared).toBe(true);
+  expect(continuity.resources).toBe('rgba(0, 0, 0, 0)');
+  expect(continuity.section).toBe('rgba(0, 0, 0, 0)');
+  expect(continuity.glow).toContain('radial-gradient');
+  expect(continuity.horizontalOverflow).toBe(false);
+  await page.evaluate(()=>window.scrollTo(0,document.querySelector('.lp-routine')!.getBoundingClientRect().top+scrollY-230));
+  await page.screenshot({path:info.outputPath('section-2-3-continuity.png')});
+});
