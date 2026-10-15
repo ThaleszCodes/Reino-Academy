@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { ArrowRight, X } from 'lucide-react';
+import { useEffect } from 'react';
+import { ArrowRight, Check, ShieldCheck, MessageCircle } from 'lucide-react';
 import './landing.css';
 
 const plans = [
@@ -7,6 +7,11 @@ const plans = [
   { name: 'Completo', price: 77, seats: 'Até 3 acessos', description: 'Mais recursos para a rotina da sua equipe.', url: 'https://pay.cakto.com.br/r8oymyi' },
   { name: 'Avançado', price: 127, seats: 'Até 20 acessos', description: 'Para desenvolver e organizar o ministério.', url: 'https://pay.cakto.com.br/39ri33i' },
 ];
+const planFeatures: Record<string,string[]> = {
+  Essencial: ['Curso Canva Evolution', '78 artes editáveis para feed', 'Modelo de identidade visual'],
+  Completo: ['Tudo do Essencial', 'Edição de vídeo com CapCut', 'Biblioteca Canva Gospel', 'Legendas, calendário e roteiros', 'Mensagens e comunicação com a liderança'],
+  Avançado: ['Tudo do Completo', 'Pack Gospel em PSD', 'Escalas e passagem de tarefas', 'Briefings, checklists e organização', 'Guias de foto, vídeo e transmissão'],
+};
 const resources = [
   { id: 'cursos', image: '01', title: 'Cursos técnicos', text: 'Canva Evolution e edição de vídeo com CapCut, conforme o plano escolhido.' },
   { id: 'artes', image: '04', title: 'Artes editáveis', text: 'Modelos para personalizar a comunicação dos cultos, eventos e ministérios.' },
@@ -14,14 +19,13 @@ const resources = [
 ];
 
 export default function Landing() {
-  const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     document.title = 'Reino Academy — Aprenda a comunicar melhor';
     const previous = document.documentElement.style.colorScheme;
     document.documentElement.style.colorScheme = 'dark';
     return () => { document.documentElement.style.colorScheme = previous; };
   }, []);
-  const openPlans = () => dialog.current?.showModal();
+  const openPlans = () => document.getElementById('planos')?.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block:'start'});
   return <div className="lp">
     <a className="lp-skip" href="#conteudo">Pular para o conteúdo</a>
     <section className="lp-hero" aria-labelledby="lp-title">
@@ -65,13 +69,29 @@ export default function Landing() {
         <p className="lp-routine-note">Recursos disponíveis conforme o plano escolhido.</p>
       </div>
     </section>
+    <section id="planos" className="lp-pricing" aria-labelledby="pricing-title">
+      <div className="lp-section-intro">
+        <p className="lp-eyebrow">UM PRÓXIMO PASSO PARA SUA MÍDIA</p>
+        <h2 id="pricing-title" tabIndex={-1}>Escolha o <span>próximo passo</span> da sua mídia.</h2>
+        <p>Pagamento único. Acesso vitalício. Escolha os recursos para o momento da sua igreja.</p>
+      </div>
+      <div className="lp-offers">{plans.map(plan => {
+        const featured = plan.name === 'Completo';
+        return <article className={featured ? 'lp-offer lp-offer-featured' : 'lp-offer'} key={plan.name} aria-labelledby={`offer-${plan.name}`}>
+          <div className="lp-offer-label">{featured && <span>PARA SUA EQUIPE</span>}</div>
+          <h3 id={`offer-${plan.name}`}>{plan.name}</h3>
+          <p className="lp-offer-description">{plan.description}</p>
+          <p className="lp-offer-price"><span>R$</span><strong>{plan.price}</strong></p>
+          <p className="lp-offer-payment">pagamento único</p>
+          <span className="lp-offer-seats">{plan.seats}{plan.name === 'Essencial' ? ' individual' : ' individuais'}</span>
+          <ul>{planFeatures[plan.name].map(feature => <li key={feature}><Check size={18} aria-hidden="true"/><span>{feature}</span></li>)}</ul>
+          <a className={featured ? 'lp-cta lp-offer-cta lp-cta-premium' : 'lp-cta lp-offer-cta lp-cta-muted'} href={plan.url}><span>Escolher {plan.name}</span></a>
+        </article>;
+      })}</div>
+      <p className="lp-access-note">Os acessos incluem o responsável pela equipe.</p>
+      <div className="lp-pricing-trust"><span><ShieldCheck size={22} aria-hidden="true"/>7 dias de garantia</span><a href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer"><MessageCircle size={20} aria-hidden="true"/>Precisa de ajuda? Fale com o suporte <ArrowRight size={16} aria-hidden="true"/></a></div>
+    </section>
     <footer className="lp-footer"><span>REINO ACADEMY</span><a href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer">Falar com o suporte <ArrowRight size={15}/></a></footer>
     </div>
-    <dialog ref={dialog} className="lp-plans" aria-labelledby="plans-title" onClick={e => { if (e.target === e.currentTarget) dialog.current?.close(); }}>
-      <button className="lp-close" aria-label="Fechar planos" onClick={() => dialog.current?.close()}><X size={22}/></button>
-      <p className="lp-eyebrow">ESCOLHA SEU PRÓXIMO PASSO</p><h2 id="plans-title">Um investimento. Acesso vitalício.</h2>
-      <p className="lp-plan-intro">Pagamento único e 7 dias de garantia. Confira todos os detalhes da oferta no checkout.</p>
-      <div className="lp-plan-grid">{plans.map(plan => <article key={plan.name}><h3>{plan.name}</h3><p>{plan.description}</p><strong><small>R$</small>{plan.price}</strong><span>{plan.seats}</span><a className="lp-cta" href={plan.url}>Escolher {plan.name} <ArrowRight size={17}/></a></article>)}</div>
-    </dialog>
   </div>;
 }

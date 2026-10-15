@@ -24,3 +24,39 @@
 .lp-routine-note{color:#929292;font-size:12px;line-height:1.6;text-align:right;margin-top:auto!important;padding-top:30px}
 @media(max-width:1100px) and (min-width:761px){.lp-routine{padding-inline:40px;gap:45px}.lp-routine-list li{gap:16px;grid-template-columns:42px 1fr}.lp-routine-list .lp-step-number{font-size:34px}}
 @media(max-width:760px){.lp-routine{grid-template-columns:1fr;padding:65px 24px 55px;gap:48px}.lp-routine h2{font-size:clamp(40px,10.8vw,65px)}.lp-routine-intro{font-size:18px;margin:25px 0 28px!important;max-width:440px}.lp-routine .lp-cta{font-size:16px;min-height:54px;max-width:360px;width:100%}.lp-routine-details{padding-top:0}.lp-routine-list li{grid-template-columns:38px minmax(0,1fr);gap:18px;padding:28px 0}.lp-routine-list .lp-step-number{font-size:30px}.lp-routine-list h3{font-size:22px;margin-bottom:11px}.lp-routine-list p{font-size:17px}.lp-routine-note{text-align:left;padding-top:12px;font-size:11px}.lp-routine::before{inset:-250px -100px -120px;background:radial-gradient(ellipse 340px 440px at 100% 250px,rgba(237,241,34,.11),rgba(237,241,34,.03) 45%,transparent 78%),radial-gradient(ellipse 350px 430px at 0% calc(100% - 100px),rgba(237,241,34,.11),rgba(237,241,34,.03) 45%,transparent 78%)}}
+
+/* Pricing lives in the same story canvas. Its light overlaps the previous fold. */
+.lp-pricing{position:relative;background:transparent;max-width:1440px;margin:auto;padding:85px 60px 70px;scroll-margin-top:28px}
+.lp-pricing::before{content:"";position:absolute;inset:-260px -180px -100px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 500px 480px at 0% 300px,rgba(237,241,34,.11),rgba(237,241,34,.025) 46%,transparent 78%)}
+.lp-pricing .lp-section-intro>p:last-child{font-size:18px}
+.lp-offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:46px}
+.lp-offer{padding:22px 28px 28px;display:flex;flex-direction:column;border:1px solid #454545;border-radius:15px;background:rgba(10,10,10,.52);min-width:0}
+.lp-offer-featured{border-color:var(--lp-yellow);background:rgba(12,12,10,.6)}
+.lp-offer-label{height:29px;display:flex;justify-content:center;align-items:flex-start;margin-bottom:8px}
+.lp-offer-label>span{background:var(--lp-yellow);color:#161707;border-radius:20px;font-size:10px;letter-spacing:.05em;font-weight:700;padding:5px 15px;line-height:1.3}
+.lp-offer h3{font-size:32px;line-height:1.2;font-weight:650}
+.lp-offer-description{min-height:48px;font-size:16px;color:#bdbdbd;line-height:1.5;margin-top:10px!important}
+.lp-offer-price{display:flex;align-items:baseline;gap:9px;margin-top:20px!important;line-height:1}
+.lp-offer-price>span{font-size:26px;font-weight:500}
+.lp-offer-price>strong{font-size:76px;letter-spacing:-.06em;line-height:1.05;font-weight:650}
+.lp-offer-payment{font-size:14px;color:#bdbdbd;margin:7px 0 18px!important}
+.lp-offer-seats{align-self:flex-start;padding:8px 13px;border:1px solid #383838;background:#202020;border-radius:25px;font-size:13px;line-height:1.4}
+.lp-offer ul{list-style:none;padding:0;margin:28px 0 34px;display:grid;gap:13px}
+.lp-offer li{display:flex;align-items:flex-start;gap:11px;color:#e1e1e1;font-size:14px;line-height:1.5}
+.lp-offer li>svg{flex-shrink:0;color:var(--lp-yellow);margin-top:2px;stroke-width:2.5}
+.lp .lp-offer-cta{width:100%;margin-top:auto;min-height:54px;font-size:16px;padding:13px 12px;border-radius:8px}
+.lp .lp-cta-muted{background:linear-gradient(180deg,#2c2c2c,#1c1c1c);border:1px solid #777;color:#f6f6f6}
+.lp .lp-cta-muted:hover{background:#353535;border-color:#aaa}
+.lp .lp-cta-premium{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(115deg,#edf122,#f5f84c 50%,#e9ee15);border:1px solid #f6fa77;box-shadow:0 0 0 1px rgba(237,241,34,.18),0 0 18px rgba(237,241,34,.3),0 5px 34px rgba(237,241,34,.17)}
+.lp .lp-cta-premium>span{position:relative;z-index:1}
+.lp .lp-cta-premium::after{content:"";position:absolute;top:-70%;left:-60%;width:45%;height:240%;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2) 25%,rgba(255,255,255,.68) 50%,rgba(255,255,255,.2) 75%,transparent);transform:translateX(-180%) skewX(-22deg);animation:lp-button-reflection 5.5s ease-in-out infinite}
+.lp .lp-cta-premium:hover{background:linear-gradient(115deg,#f4f74c,#fcfe99 50%,#eff42a);box-shadow:0 0 0 1px rgba(237,241,34,.3),0 0 24px rgba(237,241,34,.45),0 6px 42px rgba(237,241,34,.24)}
+@keyframes lp-button-reflection{0%,55%{transform:translateX(-180%) skewX(-22deg);opacity:0}58%{opacity:1}82%{transform:translateX(520%) skewX(-22deg);opacity:1}86%,100%{transform:translateX(520%) skewX(-22deg);opacity:0}}
+.lp-access-note{text-align:center;color:#a8a8a8;font-size:13px;line-height:1.5;margin-top:20px!important}
+.lp-pricing-trust{display:flex;justify-content:center;align-items:center;gap:26px;margin-top:30px;font-size:14px;color:#cecece}
+.lp-pricing-trust>span,.lp-pricing-trust>a{display:inline-flex;align-items:center;gap:10px;line-height:1.5}
+.lp-pricing-trust>a{border-left:1px solid #444;padding-left:26px}
+.lp-pricing-trust>a:hover{color:var(--lp-yellow)}
+@media(min-width:761px) and (max-width:1100px){.lp-pricing{padding-inline:35px}.lp-offers{gap:15px}.lp-offer{padding:19px}.lp-offer h3{font-size:27px}.lp-offer-description{font-size:14px;min-height:63px}.lp-offer-price>strong{font-size:66px}.lp-offer li{font-size:13px;gap:8px}.lp .lp-offer-cta{font-size:14px}}
+@media(max-width:760px){.lp-pricing{padding:45px 24px 50px;scroll-margin-top:20px}.lp-pricing h2{font-size:32px}.lp-pricing .lp-section-intro>p:last-child{font-size:16px}.lp-offers{grid-template-columns:1fr;gap:26px;margin:34px auto 0;max-width:480px}.lp-offer{padding:22px 25px 27px}.lp-offer-label{height:22px;margin-bottom:10px}.lp-offer:not(.lp-offer-featured) .lp-offer-label{display:none}.lp-offer h3{font-size:31px}.lp-offer-description{min-height:0;font-size:16px}.lp-offer-price>strong{font-size:72px}.lp-offer li{font-size:15px}.lp-offer ul{margin-bottom:28px}.lp-pricing-trust{flex-direction:column;gap:15px;font-size:13px}.lp-pricing-trust>a{border:0;padding:0;gap:7px;flex-wrap:wrap;justify-content:center}.lp-access-note{font-size:12px}.lp-pricing::before{inset:-230px -100px -80px;background:radial-gradient(ellipse 330px 480px at 0% 270px,rgba(237,241,34,.11),rgba(237,241,34,.025) 46%,transparent 78%)}}
+@media(prefers-reduced-motion:reduce){.lp .lp-cta-premium::after{animation:none;opacity:0}.lp .lp-offer-cta:hover{transform:none}}
