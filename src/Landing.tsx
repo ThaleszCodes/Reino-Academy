@@ -32,7 +32,7 @@ export default function Landing() {
       <img className="lp-backdrop" src="/banners/lp-hero.webp" alt="" fetchPriority="high" />
       <header className="lp-header">
         <a className="lp-wordmark" href="/" aria-label="Reino Academy, início">REINO<span>ACADEMY</span></a>
-        <nav aria-label="Navegação da página"><a href="#cursos">Cursos</a><a href="#artes">Artes</a><a href="#ferramentas">Ferramentas</a><a href="/login">Já sou aluno <ArrowRight size={14}/></a></nav>
+        <nav aria-label="Navegação da página"><a href="#cursos">Cursos</a><a href="#artes">Artes</a><a href="#ferramentas">Ferramentas</a><span className="lp-student-access"><a className="lp-student-label" href="/login">Já sou aluno</a><a className="lp-login-button" href="/login">Entrar <ArrowRight size={15} aria-hidden="true"/></a></span></nav>
       </header>
       <main className="lp-hero-copy" id="conteudo">
         <h1 id="lp-title">Sua igreja tem uma mensagem.<br/><span>Aprenda a comunicá-la melhor.</span></h1>
