@@ -94,3 +94,24 @@ test('centered guarantee uses a native seal and connects to plans and support',a
   await section.scrollIntoViewIfNeeded();
   await page.screenshot({path:info.outputPath('guarantee-section.png'),animations:'disabled'});
 });
+
+test('FAQ keyboard interaction and closing CTA work across continuous folds',async({page},info)=>{
+  await page.goto('/');
+  const faq=page.getByRole('region',{name:'Ainda ficou alguma dúvida?'});
+  await expect(faq.locator('details')).toHaveCount(8);
+  const first=faq.locator('summary').first();
+  await first.focus();
+  await page.keyboard.press('Enter');
+  await expect(faq.locator('details').first()).toHaveAttribute('open','');
+  await expect(faq.getByText('O pagamento é único, com acesso vitalício',{exact:false})).toBeVisible();
+  await page.keyboard.press('Enter');
+  await expect(faq.locator('details').first()).not.toHaveAttribute('open','');
+  const final=page.getByRole('region',{name:'Seu próximo culto já pode começar com mais preparo.'});
+  await final.getByRole('button',{name:'Escolher meu plano'}).click();
+  await expect(page.locator('#planos')).toBeInViewport();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect(await faq.evaluate(el=>el.parentElement===document.querySelector('.lp-final-cta')!.parentElement && getComputedStyle(el).backgroundColor==='rgba(0, 0, 0, 0)')).toBe(true);
+  await expect(page.getByRole('navigation',{name:'Links do rodapé'}).getByRole('link',{name:'Acessar minha conta'})).toHaveAttribute('href','/login');
+  await faq.scrollIntoViewIfNeeded();
+  await page.screenshot({path:info.outputPath('closing-folds.png'),fullPage:true,animations:'disabled'});
+});

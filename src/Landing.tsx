@@ -12,6 +12,16 @@ const planFeatures: Record<string,string[]> = {
   Completo: ['Tudo do Essencial', 'Edição de vídeo com CapCut', 'Biblioteca Canva Gospel', 'Legendas, calendário e roteiros', 'Mensagens e comunicação com a liderança'],
   Avançado: ['Tudo do Completo', 'Pack Gospel em PSD', 'Escalas e passagem de tarefas', 'Briefings, checklists e organização', 'Guias de foto, vídeo e transmissão'],
 };
+const faqs = [
+  { question: 'É assinatura ou pagamento único?', answer: 'O pagamento é único, com acesso vitalício aos conteúdos incluídos no plano escolhido. Não há mensalidade da Reino Academy.' },
+  { question: 'Como recebo meu acesso?', answer: 'Após a aprovação do pagamento pela Cakto, o acesso é vinculado ao e-mail informado na compra. Use esse mesmo e-mail para criar sua conta ou entrar na plataforma. Se precisar de ajuda com a liberação, fale com o suporte.' },
+  { question: 'Preciso ter Canva Pro?', answer: 'Você precisa de uma conta no Canva para editar os modelos. Elementos ou recursos identificados como Pro podem exigir uma licença do Canva. A compra da Reino Academy não inclui uma assinatura Canva Pro.' },
+  { question: 'Os cursos têm conteúdo cristão?', answer: 'Os cursos são técnicos e não têm conteúdo especificamente cristão. Eles ensinam ferramentas de criação e edição que você pode aplicar à comunicação da sua igreja. Os packs gospel e os materiais para a equipe são apresentados separadamente, conforme o plano.' },
+  { question: 'Como funcionam os acessos da equipe?', answer: 'O Essencial inclui 1 acesso; o Completo, até 3; e o Avançado, até 20. O responsável está incluído nesse limite. Cada integrante usa seu próprio login, e o responsável administra os convites na plataforma.' },
+  { question: 'Como abro os modelos do Canva?', answer: 'Abra o link do material usando seu espaço pessoal no Canva. Os links dos modelos podem não abrir dentro de uma equipe. Se estiver em uma equipe, troque para seu espaço pessoal e tente novamente. Confira também as instruções disponíveis no material.' },
+  { question: 'Posso acessar pelo celular?', answer: 'Sim. Você pode acessar a plataforma pelo navegador do celular ou do computador. A edição dos materiais depende do aplicativo ou ferramenta correspondente, como Canva ou Photoshop para arquivos PSD.' },
+  { question: 'Como solicito suporte ou reembolso?', answer: 'Fale com nosso suporte pelo WhatsApp (53) 99125-7648, informando o e-mail usado na compra. Para solicitar o reembolso dentro da garantia, entre em contato em até 7 dias após a compra.' },
+];
 const resources = [
   { id: 'cursos', image: '01', title: 'Cursos técnicos', text: 'Canva Evolution e edição de vídeo com CapCut, conforme o plano escolhido.' },
   { id: 'artes', image: '04', title: 'Artes editáveis', text: 'Modelos para personalizar a comunicação dos cultos, eventos e ministérios.' },
@@ -102,7 +112,30 @@ export default function Landing() {
       <a className="lp-cta" href="#planos">Escolher meu plano <ArrowRight size={20} aria-hidden="true"/></a>
       <a className="lp-guarantee-support" href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer">Dúvidas sobre a garantia? Fale com o suporte <ArrowRight size={15} aria-hidden="true"/></a>
     </section>
-    <footer className="lp-footer"><span>REINO ACADEMY</span><a href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer">Falar com o suporte <ArrowRight size={15}/></a></footer>
+    <section id="duvidas" className="lp-faq" aria-labelledby="faq-title">
+      <div className="lp-section-intro"><p className="lp-eyebrow">ANTES DO SEU PRÓXIMO PASSO</p>
+        <h2 id="faq-title">Ainda ficou <span>alguma dúvida?</span></h2>
+        <p>Veja o que você precisa saber para começar.</p>
+      </div>
+      <div className="lp-faq-list">{faqs.map(faq => <details className="lp-faq-item" key={faq.question}>
+        <summary>{faq.question}<span className="lp-faq-toggle" aria-hidden="true"/></summary>
+        <div className="lp-faq-answer"><p>{faq.answer}</p></div>
+      </details>)}</div>
+      <p className="lp-faq-support">Não encontrou sua resposta? <a href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer">Converse com o suporte <ArrowRight size={14} aria-hidden="true"/></a></p>
+    </section>
+    <section className="lp-final-cta" aria-labelledby="final-cta-title">
+      <p className="lp-eyebrow">APRENDA. CRIE. SIRVA.</p>
+      <h2 id="final-cta-title">Seu próximo culto já pode começar<br/><span>com mais preparo.</span></h2>
+      <p>Cursos, artes editáveis e materiais para dar o próximo passo na comunicação da sua igreja.</p>
+      <button className="lp-cta lp-cta-premium" onClick={openPlans}><span>Escolher meu plano</span><ArrowRight size={20} aria-hidden="true"/></button>
+      <small>A partir de R$27 · Pagamento único · 7 dias de garantia</small>
+    </section>
+    <footer className="lp-footer lp-footer-complete">
+      <div className="lp-footer-top"><a className="lp-wordmark" href="/" aria-label="Reino Academy, início">REINO<span>ACADEMY</span></a>
+        <nav aria-label="Links do rodapé"><a href="#planos">Planos</a><a href="#duvidas">Dúvidas frequentes</a><a href="/login">Acessar minha conta</a><a href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer">Suporte <ArrowRight size={14} aria-hidden="true"/></a></nav>
+      </div>
+      <div className="lp-footer-bottom"><p>© {new Date().getFullYear()} Reino Academy.</p><p>Cursos técnicos e recursos para quem serve na mídia da igreja.</p></div>
+    </footer>
     </div>
   </div>;
 }
