@@ -27,7 +27,7 @@ export default function Landing() {
     <section className="lp-hero" aria-labelledby="lp-title">
       <img className="lp-backdrop" src="/banners/lp-hero.webp" alt="" fetchPriority="high" />
       <header className="lp-header">
-        <a className="lp-wordmark" href="/lp" aria-label="Reino Academy, início">REINO<span>ACADEMY</span></a>
+        <a className="lp-wordmark" href="/" aria-label="Reino Academy, início">REINO<span>ACADEMY</span></a>
         <nav aria-label="Navegação da página"><a href="#cursos">Cursos</a><a href="#artes">Artes</a><a href="#ferramentas">Ferramentas</a><a href="/login">Já sou aluno <ArrowRight size={14}/></a></nav>
       </header>
       <main className="lp-hero-copy" id="conteudo">

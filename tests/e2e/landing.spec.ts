@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 test('landing shows resources and functional checkout choices', async ({ page }) => {
   const errors:string[]=[];
   page.on('pageerror', e=>errors.push(e.message));
-  await page.goto('/lp');
+  await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Sua igreja tem uma mensagem.');
   await expect(page.locator('.lp-resource')).toHaveCount(3);
   await expect(page.locator('.lp-disclaimer')).toContainText('não têm conteúdo especificamente cristão');
@@ -17,4 +17,14 @@ test('landing shows resources and functional checkout choices', async ({ page })
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   expect(errors).toEqual([]);
   await page.screenshot({path:`test-results/lp-${test.info().project.name}.png`,fullPage:true});
+});
+
+test('previous LP address still opens the public page', async ({page}) => {
+  await page.goto('/lp');
+  await expect(page.getByRole('heading',{level:1})).toContainText('Sua igreja tem uma mensagem.');
+});
+test('old invitation URLs still enter the platform', async ({page}) => {
+  await page.goto('/?convite=legacy-test');
+  await expect(page).toHaveURL(/\/login\?convite=legacy-test/);
+  await expect(page.getByRole('button',{name:'Entrar',exact:true})).toBeVisible();
 });
