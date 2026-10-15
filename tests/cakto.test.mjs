@@ -1,8 +1,10 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {parseCaktoEvent,constantTimeEqual} from '../supabase/functions/cakto-webhook/payload.ts';
+import {parseCaktoEvent,constantTimeEqual,isCaktoExample} from '../supabase/functions/cakto-webhook/payload.ts';
 const approved=()=>({event:'purchase_approved',secret:'example-secret',data:{id:'test-order',status:'paid',offer:{id:'test-offer'},product:{id:'test-product'},customer:{email:'OWNER@example.invalid',phone:'sensitive'},cpf:'sensitive'}});
 test('approved payment keeps only entitlement fields',()=>{const r=parseCaktoEvent(approved());assert.equal(r.event,'purchase_approved');assert.equal(r.data.customer.email,'owner@example.invalid');assert.deepEqual(Object.keys(r.data).sort(),['customer','id','offer','product','status']);assert.equal(JSON.stringify(r).includes('sensitive'),false);assert.equal(JSON.stringify(r).includes('example-secret'),false)});
 test('unpaid approvals and malformed events are rejected',()=>{const b=approved();b.data.status='waiting_payment';assert.throws(()=>parseCaktoEvent(b));delete b.data.customer.email;assert.throws(()=>parseCaktoEvent(b));assert.throws(()=>parseCaktoEvent({event:'refund'}));});
 test('refund and chargeback are accepted; unrelated events ignored',()=>{for(const event of ['refund','chargeback']){const b=approved();b.event=event;assert.equal(parseCaktoEvent(b).event,event)}assert.equal(parseCaktoEvent({event:'purchase_created'}).ignored,true);});
 test('secret comparison rejects prefixes and different lengths',()=>{assert.equal(constantTimeEqual('secret-123','secret-123'),true);for(const s of ['','secret','secret-1234','secret-124'])assert.equal(constantTimeEqual('secret-123',s),false);});
+
+test('only the exact Cakto example is acknowledged without granting access',()=>{const sample={id:'87956abe-940e-4e8b-8a27-82c482920f64',product:{id:'ff3fdf61-e88f-43b5-982a-32d50f112414'},offer:{id:'B8BcHrY'},customer:{email:'john.doe@example.com'}};assert.equal(isCaktoExample(sample),true);for(const key of ['id','product','offer','customer'])assert.equal(isCaktoExample({...sample,[key]:null}),false);assert.equal(isCaktoExample(approved().data),false)});

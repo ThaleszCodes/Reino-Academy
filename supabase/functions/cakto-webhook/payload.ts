@@ -7,3 +7,7 @@ export function parseCaktoEvent(body:any){
  // Retain only fields necessary for entitlement. No CPF, phone, card or secret is stored.
  return {ignored:false,event:body.event,data:{id:d.id,offer:{id:d.offer.id},product:{id:d.product.id},customer:{email:d.customer.email.trim().toLowerCase()},status:d.status}};
 }
+
+// The fixed individual-delivery example supplied by Cakto is a connectivity probe,
+// never a purchase. Require the complete fixture identity, not merely a test flag.
+export function isCaktoExample(data:any){return data?.id==='87956abe-940e-4e8b-8a27-82c482920f64'&&data?.product?.id==='ff3fdf61-e88f-43b5-982a-32d50f112414'&&data?.offer?.id==='B8BcHrY'&&data?.customer?.email==='john.doe@example.com';}
