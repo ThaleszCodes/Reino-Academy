@@ -41,7 +41,7 @@ export default function Landing() {
     <section className="lp-hero" aria-labelledby="lp-title">
       <img className="lp-backdrop" src="/banners/lp-hero.webp" alt="" fetchPriority="high" />
       <header className="lp-header">
-        <a className="lp-wordmark" href="/" aria-label="Reino Academy, início">REINO<span>ACADEMY</span></a>
+        <a className="lp-wordmark" href="/" aria-label="Reino Academy, início"><img src="/banners/brand-logo-transparent.png" alt="Reino Academy" width="2172" height="724"/></a>
         <nav aria-label="Navegação da página"><a href="#cursos">Cursos</a><a href="#artes">Artes</a><a href="#ferramentas">Ferramentas</a><span className="lp-student-access"><a className="lp-student-label" href="/login">Já sou aluno</a><a className="lp-login-button" href="/login">Entrar <ArrowRight size={15} aria-hidden="true"/></a></span></nav>
       </header>
       <main className="lp-hero-copy" id="conteudo">
@@ -131,7 +131,7 @@ export default function Landing() {
       <small>A partir de R$27 · Pagamento único · 7 dias de garantia</small>
     </section>
     <footer className="lp-footer lp-footer-complete">
-      <div className="lp-footer-top"><a className="lp-wordmark" href="/" aria-label="Reino Academy, início">REINO<span>ACADEMY</span></a>
+      <div className="lp-footer-top"><a className="lp-wordmark" href="/" aria-label="Reino Academy, início"><img src="/banners/brand-logo-transparent.png" alt="Reino Academy" width="2172" height="724"/></a>
         <nav aria-label="Links do rodapé"><a href="#planos">Planos</a><a href="#duvidas">Dúvidas frequentes</a><a href="/login">Acessar minha conta</a><a href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer">Suporte <ArrowRight size={14} aria-hidden="true"/></a></nav>
       </div>
       <div className="lp-footer-bottom"><p>© {new Date().getFullYear()} Reino Academy.</p><p>Cursos técnicos e recursos para quem serve na mídia da igreja.</p></div>

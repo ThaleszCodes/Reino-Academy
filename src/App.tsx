@@ -8,7 +8,7 @@ type Data={workspace:Workspace;courses:Course[];resources:Resource[];modules:Mod
 const Context=createContext<Data|null>(null);
 const useData=()=>useContext(Context)!;
 const nav=[{to:'/inicio',label:'Início',icon:Home},{to:'/cursos',label:'Cursos',icon:SquarePlay},{to:'/biblioteca',label:'Biblioteca',icon:Folder},{to:'/equipe',label:'Minha equipe',icon:Users}];
-function Logo(){return <RouterLink to="/inicio" aria-label="Reino Academy — início" className="brand"><img src="/brand-logo.webp" alt="Reino Academy" width="220" height="74"/></RouterLink>}
+function Logo(){return <RouterLink to="/inicio" aria-label="Reino Academy — início" className="brand"><img src="/banners/brand-logo-transparent.png" alt="Reino Academy" width="220" height="74"/></RouterLink>}
 function Button({children,busy=false,...props}:React.ButtonHTMLAttributes<HTMLButtonElement>&{busy?:boolean}){return <button {...props} disabled={props.disabled||busy}>{busy?<LoaderCircle className="spin" size={18}/>:null}{children}</button>}
 function Dialog({title,children,onClose}:{title:string;children:ReactNode;onClose:()=>void}){const ref=useRef<HTMLDialogElement>(null);useEffect(()=>{ref.current?.showModal();return()=>ref.current?.close()},[]);return <dialog ref={ref} onCancel={onClose} onClick={e=>{if(e.target===ref.current)onClose()}}><div className="dialog-head"><h2>{title}</h2><button className="icon-btn" onClick={onClose} aria-label="Fechar"><X/></button></div>{children}</dialog>}
 function Message({text}:{text:string}){return text?<p className="feedback" role="alert">{text}</p>:null}
