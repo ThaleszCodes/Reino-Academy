@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
-import { ArrowRight, Check, ShieldCheck, MessageCircle } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { ArrowRight, ArrowDown, Check, ShieldCheck, MessageCircle, UsersRound } from 'lucide-react';
+import { useLandingMotion } from './useLandingMotion';
 import './landing.css';
 
 const plans = [
@@ -23,12 +24,14 @@ const faqs = [
   { question: 'Como solicito suporte ou reembolso?', answer: 'Fale com nosso suporte pelo WhatsApp (53) 99125-7648, informando o e-mail usado na compra. Para solicitar o reembolso dentro da garantia, entre em contato em até 7 dias após a compra.' },
 ];
 const resources = [
-  { id: 'cursos', image: '01', title: 'Cursos técnicos', text: 'Canva Evolution e edição de vídeo com CapCut, conforme o plano escolhido.' },
-  { id: 'artes', image: '04', title: 'Artes editáveis', text: 'Modelos para personalizar a comunicação dos cultos, eventos e ministérios.' },
-  { id: 'ferramentas', image: '15', title: 'Materiais para a equipe', text: 'Escalas, checklists, mensagens, legendas e outros recursos, conforme o plano.' },
+  { id: 'cursos', image: '01', label: 'APRENDA', title: 'Cursos técnicos', text: 'Canva Evolution e edição de vídeo com CapCut, conforme o plano escolhido.' },
+  { id: 'artes', image: '04', label: 'CRIE', title: 'Artes editáveis', text: 'Modelos para personalizar a comunicação dos cultos, eventos e ministérios.' },
+  { id: 'ferramentas', image: '15', label: 'ORGANIZE', title: 'Materiais para a equipe', text: 'Escalas, checklists, mensagens, legendas e outros recursos, conforme o plano.' },
 ];
 
 export default function Landing() {
+  const root = useRef<HTMLDivElement>(null);
+  useLandingMotion(root);
   useEffect(() => {
     document.title = 'Reino Academy — Aprenda a comunicar melhor';
     const previous = document.documentElement.style.colorScheme;
@@ -36,8 +39,9 @@ export default function Landing() {
     return () => { document.documentElement.style.colorScheme = previous; };
   }, []);
   const openPlans = () => document.getElementById('planos')?.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block:'start'});
-  return <div className="lp">
+  return <div className="lp" ref={root}>
     <a className="lp-skip" href="#conteudo">Pular para o conteúdo</a>
+    <div className="lp-bottom-glass" aria-hidden="true"/>
     <section className="lp-hero" aria-labelledby="lp-title">
       <img className="lp-backdrop" src="/banners/lp-hero.webp" alt="" fetchPriority="high" />
       <header className="lp-header">
@@ -45,20 +49,23 @@ export default function Landing() {
         <nav aria-label="Navegação da página"><a href="#cursos">Cursos</a><a href="#artes">Artes</a><a href="#ferramentas">Ferramentas</a><span className="lp-student-access"><a className="lp-student-label" href="/login">Já sou aluno</a><a className="lp-login-button" href="/login">Entrar <ArrowRight size={15} aria-hidden="true"/></a></span></nav>
       </header>
       <main className="lp-hero-copy" id="conteudo">
+        <p className="lp-hero-kicker"><span aria-hidden="true"/>PARA QUEM SERVE NA MÍDIA</p>
         <h1 id="lp-title">Sua igreja tem uma mensagem.<br/><span>Aprenda a comunicá-la melhor.</span></h1>
         <p>Cursos, artes editáveis e ferramentas para quem serve na mídia da igreja.</p>
-        <button className="lp-cta" onClick={openPlans}>Conhecer os planos <ArrowRight size={21}/></button>
+        <button className="lp-cta lp-cta-premium" onClick={openPlans}><span>Conhecer os planos</span><ArrowRight size={21} aria-hidden="true"/></button>
         <small>A partir de R$27 <i>·</i> Pagamento único <i>·</i> Garantia de 7 dias</small>
+        <a className="lp-discover" href="#recursos">Explore os recursos <ArrowDown size={14} aria-hidden="true"/></a>
       </main>
     </section>
     <div className="lp-story">
-    <section className="lp-resources" aria-labelledby="resources-title">
+    <section id="recursos" className="lp-resources" aria-labelledby="resources-title">
       <div className="lp-section-intro"><p className="lp-eyebrow">O QUE VOCÊ ENCONTRA AQUI</p>
         <h2 id="resources-title">Aprenda as ferramentas.<br/>Tenha recursos para <span>colocar em prática.</span></h2>
         <p>Da criação das artes à organização da equipe, escolha os recursos para o momento da sua igreja.</p>
       </div>
-      <div className="lp-resource-grid">{resources.map(resource => <article id={resource.id} className="lp-resource" key={resource.id}>
-        <img src={`/banners/${resource.image}.webp`} alt="" loading="lazy" width="960" height="540"/>
+      <div className="lp-resource-grid">{resources.map((resource, index) => <article id={resource.id} className="lp-resource" key={resource.id}>
+        <div className="lp-resource-meta" aria-hidden="true"><span>0{index + 1}</span><span>{resource.label}</span></div>
+        <div className="lp-resource-media"><img src={`/banners/${resource.image}.webp`} alt="" loading="lazy" decoding="async" width="960" height="540"/></div>
         <h3>{resource.title}</h3><p>{resource.text}</p>
       </article>)}</div>
       <div className="lp-disclaimer"><p>Os cursos são técnicos e não têm conteúdo especificamente cristão.</p><small>Os conteúdos disponíveis variam conforme o plano escolhido.</small></div>
@@ -68,7 +75,7 @@ export default function Landing() {
         <p className="lp-eyebrow">NA ROTINA DA SUA MÍDIA</p>
         <h2 id="routine-title">O próximo culto<br/>não precisa<br/><span>começar na<br/>correria.</span></h2>
         <p className="lp-routine-intro">Aprenda, adapte os materiais e organize os próximos passos de quem serve com você.</p>
-        <button className="lp-cta" onClick={openPlans}>Encontrar meu plano <ArrowRight size={22}/></button>
+        <button className="lp-cta" onClick={openPlans}><span>Encontrar meu plano</span><ArrowRight size={22} aria-hidden="true"/></button>
       </div>
       <div className="lp-routine-details">
         <ol className="lp-routine-list">
@@ -93,9 +100,9 @@ export default function Landing() {
           <p className="lp-offer-description">{plan.description}</p>
           <p className="lp-offer-price"><span>R$</span><strong>{plan.price}</strong></p>
           <p className="lp-offer-payment">pagamento único</p>
-          <span className="lp-offer-seats">{plan.seats}{plan.name === 'Essencial' ? ' individual' : ' individuais'}</span>
+          <span className="lp-offer-seats"><UsersRound size={15} aria-hidden="true"/>{plan.seats}{plan.name === 'Essencial' ? ' individual' : ' individuais'}</span>
           <ul>{planFeatures[plan.name].map(feature => <li key={feature}><Check size={18} aria-hidden="true"/><span>{feature}</span></li>)}</ul>
-          <a className={featured ? 'lp-cta lp-offer-cta lp-cta-premium' : 'lp-cta lp-offer-cta lp-cta-muted'} href={plan.url}><span>Escolher {plan.name}</span></a>
+          <a className={featured ? 'lp-cta lp-offer-cta lp-cta-premium' : 'lp-cta lp-offer-cta lp-cta-muted'} href={plan.url}><span>Escolher {plan.name}</span><ArrowRight size={18} aria-hidden="true"/></a>
         </article>;
       })}</div>
       <p className="lp-access-note">Os acessos incluem o responsável pela equipe.</p>
@@ -109,7 +116,7 @@ export default function Landing() {
       <h2 id="guarantee-title">Conheça por dentro.<br/><span>Você tem 7 dias de garantia.</span></h2>
       <p className="lp-guarantee-intro">Entre na plataforma, explore os conteúdos do seu plano e veja como eles podem ajudar na rotina da sua mídia.</p>
       <p className="lp-guarantee-terms">Se decidir que não é para você, solicite o reembolso em até 7 dias após a compra. Nosso suporte está disponível para orientar você.</p>
-      <a className="lp-cta" href="#planos">Escolher meu plano <ArrowRight size={20} aria-hidden="true"/></a>
+      <a className="lp-cta" href="#planos"><span>Escolher meu plano</span><ArrowRight size={20} aria-hidden="true"/></a>
       <a className="lp-guarantee-support" href="https://wa.me/5553991257648" target="_blank" rel="noopener noreferrer">Dúvidas sobre a garantia? Fale com o suporte <ArrowRight size={15} aria-hidden="true"/></a>
     </section>
     <section id="duvidas" className="lp-faq" aria-labelledby="faq-title">
@@ -136,6 +143,7 @@ export default function Landing() {
       </div>
       <div className="lp-footer-bottom"><p>© {new Date().getFullYear()} Reino Academy.</p><p>Cursos técnicos e recursos para quem serve na mídia da igreja.</p></div>
     </footer>
+    <div className="lp-page-end" aria-hidden="true"/>
     </div>
   </div>;
 }
