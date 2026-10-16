@@ -44,16 +44,22 @@ export function useLandingMotion(rootRef: RefObject<HTMLDivElement | null>) {
       }, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
 
       const initial: HTMLElement[] = [];
-      elements.forEach(element => {
-        const bounds = element.getBoundingClientRect();
+      // Read all geometry before changing styles to avoid layout thrashing.
+      const positions = elements.map(element => ({
+        element,
+        bounds: element.getBoundingClientRect(),
+        index: Array.from(element.parentElement!.children).indexOf(element),
+      }));
+      positions.forEach(({ element, bounds, index }) => {
         // Never hide content already above the viewport (restored scroll/deep links).
         if (bounds.bottom <= 0) return;
-        const index = Array.from(element.parentElement!.children).indexOf(element);
         element.style.setProperty('--reveal-delay', `${Math.min(index, 3) * 65}ms`);
         element.dataset.reveal = 'pending';
         if (bounds.top < window.innerHeight - 24) initial.push(element);
         else revealObserver!.observe(element);
       });
+      // Commit entrance start styles once before beginning the transition.
+      void root.offsetHeight;
       frame = requestAnimationFrame(() => initial.forEach(element => reveal(element)));
     };
 
@@ -81,11 +87,13 @@ export function useLandingMotion(rootRef: RefObject<HTMLDivElement | null>) {
       });
     });
     root.querySelectorAll('.lp-cta-premium, .lp-page-end').forEach(element => polishObserver.observe(element));
+    root.classList.add('lp-has-observers');
 
     return () => {
       cancelAnimationFrame(frame);
       revealObserver?.disconnect();
       polishObserver.disconnect();
+      root.classList.remove('lp-has-observers', 'lp-at-end');
       preference.removeEventListener('change', configureMotion);
       root.removeEventListener('focusin', handleFocus);
       elements.forEach(element => {
