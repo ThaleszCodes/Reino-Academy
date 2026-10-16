@@ -1,3 +1,5 @@
+import {captureAttribution} from './affiliate';
+captureAttribution(location.search);
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, useLocation } from 'react-router-dom';
