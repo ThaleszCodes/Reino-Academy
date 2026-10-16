@@ -1,3 +1,4 @@
+import {checkoutWithAttribution} from './affiliate';
 import { useEffect, useRef } from 'react';
 import { ArrowRight, ArrowDown, Check, ShieldCheck, MessageCircle, UsersRound } from 'lucide-react';
 import { useLandingMotion } from './useLandingMotion';
@@ -102,7 +103,7 @@ export default function Landing() {
           <p className="lp-offer-payment">pagamento único</p>
           <span className="lp-offer-seats"><UsersRound size={15} aria-hidden="true"/>{plan.seats}{plan.name === 'Essencial' ? ' individual' : ' individuais'}</span>
           <ul>{planFeatures[plan.name].map(feature => <li key={feature}><Check size={18} aria-hidden="true"/><span>{feature}</span></li>)}</ul>
-          <a className={featured ? 'lp-cta lp-offer-cta lp-cta-premium' : 'lp-cta lp-offer-cta lp-cta-muted'} href={plan.url}><span>Escolher {plan.name}</span><ArrowRight size={18} aria-hidden="true"/></a>
+          <a className={featured ? 'lp-cta lp-offer-cta lp-cta-premium' : 'lp-cta lp-offer-cta lp-cta-muted'} href={checkoutWithAttribution(plan.url)}><span>Escolher {plan.name}</span><ArrowRight size={18} aria-hidden="true"/></a>
         </article>;
       })}</div>
       <p className="lp-access-note">Os acessos incluem o responsável pela equipe.</p>
