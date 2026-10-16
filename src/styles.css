@@ -10,3 +10,5 @@
 .video-wrap{position:relative}.player-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:#f5f6f0;color:#555940;pointer-events:none}.course-notice{margin:0 0 24px;font-size:14px}.course-attachments{margin-top:8px;background:#f8f9fa}.course-attachments summary{font-size:13px;color:var(--muted)}a.lesson{text-decoration:none}
 
 .brand img,.mobile-auth-brand .brand img{border-radius:0;object-fit:contain}
+
+.signout-control{display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px}.signout-button{min-height:44px!important;white-space:nowrap}.mobile-account-actions{display:flex;align-items:center;gap:8px}@media(max-width:760px){.mobile-top{gap:8px}.mobile-top .brand{width:clamp(125px,35vw,176px)}.mobile-account-actions .signout-button{font-size:12px;gap:5px}.mobile-account-actions .signout-button svg{width:16px}}
